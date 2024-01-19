@@ -8,13 +8,13 @@
 public class GameOfLife {
 
 	public static void main(String[] args) {
-		//String fileName = args[0]; ///להוריד שמריצים
+		String fileName = args[0]; ///להוריד שמריצים
 		//// Uncomment the test that you want to execute, and re-compile.
 		//// (Run one test at a time).
 		// test1(fileName);
 		 //test2(fileName);
 		 //test3(fileName, 3);
-		// play(fileName);
+		 play(fileName);
 	}
 	
 	// Reads the data file and prints the initial board.
@@ -63,31 +63,30 @@ public class GameOfLife {
 	// of this frame as representing the infinite number of dead cells that exist in every direction.
 	// This function assumes that the input file contains valid data, and does no input testing.
 	public static int[][] read(String fileName) {
-		In in = new In(fileName); // Constructs an In object for reading the input file
-		int rows = Integer.parseInt(in.readLine());
-		int cols = Integer.parseInt(in.readLine());
-		int[][] board = new int[rows + 2][cols + 2];
-		//// Replace the following statement with your code.
+		 int count = 0;
+        int lineCount = 0;
+        In in = new In(fileName); // Constructs an In object for reading the input file
+        int rows = Integer.parseInt(in.readLine());
+        int cols = Integer.parseInt(in.readLine());
+        int[][] board = new int[rows + 2][cols + 2];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                String line = in.readLine();
+                if (line != null) {
+                    for (int k = 0; k < line.length(); k++) {
+                        if (line.charAt(k) == 'x') {
+                            board[lineCount + 1][k + 1] = 1;
+                        }
+                    }
+                }
+                lineCount++;
+            }
+        }
 
-		String rowString = in.readLine(); //enter the firt empty row
-		for (int i = 2; i < board.length-2; i++ ){
-			 rowString = in.readLine(); // enter the second row maybe its empty maybe its not 
-			
-			if (!rowString.isEmpty()) {
 
-			for (int j = 2; j < board[1].length-2; j++){
-				if (rowString.charAt(j-1) == 'x'){
-					board[i][j] = 1;
-				}else  {
-					board[i][j] = 0;
-				}
-
-			}
-			}
-		}
-
-		return board;
-	}
+        //// Replace the following statement with your code.
+        return board;
+    }
 	
 	// Creates a new board from the given board, using the rules of the game.
 	// Uses the cellValue(board,i,j) function to compute the value of each 
