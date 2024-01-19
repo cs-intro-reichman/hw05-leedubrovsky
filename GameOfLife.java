@@ -8,26 +8,30 @@
 public class GameOfLife {
 
 	public static void main(String[] args) {
-		String fileName = args[0];
+		String fileName = args[0]; ///להוריד שמריצים
 		//// Uncomment the test that you want to execute, and re-compile.
 		//// (Run one test at a time).
-		//// test1(fileName);
-		//// test2(fileName);
-		//// test3(fileName, 3);
-		//// play(fileName);
+		 test1(fileName);
+		 test2(fileName);
+		 test3(fileName, 3);
+		 //play(fileName);
 	}
 	
 	// Reads the data file and prints the initial board.
-	private static void test1(String fileName) {
+	public static void test1(String fileName) {
 		int[][] board = read(fileName);
 		print(board);
 	}
 		
 	// Reads the data file, and runs a test that checks 
 	// the count and cellValue functions.
-	private static void test2(String fileName) {
+	public static void test2(String fileName) {
 		int[][] board = read(fileName);
+		int i =2;
+		int j =3;
 		//// Write here code that tests that the count and cellValue functions
+		System.out.println(count(board, i, j));
+		//count(board, i, j);
 		//// are working properly, and returning the correct values.
 	}
 		
@@ -64,7 +68,25 @@ public class GameOfLife {
 		int cols = Integer.parseInt(in.readLine());
 		int[][] board = new int[rows + 2][cols + 2];
 		//// Replace the following statement with your code.
-		return null;
+
+		String rowString = in.readLine(); //enter the firt empty row
+		for (int i = 2; i < board.length-2; i++ ){
+			rowString = in.readLine(); // enter the second row maybe its empty maybe its not 
+			
+			if (!rowString.isEmpty()) {
+
+			for (int j = 2; j < board[0].length-2; j++){
+				if (rowString.charAt(j-1) == 'x'  ){
+					board[i][j] = 1;
+				}else  {
+					board[i][j] = 0;
+				}
+
+			}
+			}
+		}
+
+		return board;
 	}
 	
 	// Creates a new board from the given board, using the rules of the game.
@@ -72,7 +94,14 @@ public class GameOfLife {
 	// cell in the new board. Returns the new board.
 	public static int[][] evolve(int[][] board) {
 		//// Replace the following statement with your code.
-		return null;
+		int[][] finalBoard = new int[board.length][board[0].length] ;
+		for (int i = 1; i < finalBoard.length-1; i++){
+			for (int j = 1; j < finalBoard[i].length-1; j++){
+				finalBoard[i][j] = cellValue(board, i, j);
+			}
+		}
+
+		return finalBoard;
 	}
 
 	// Returns the value that cell (i,j) should have in the next generation.
@@ -86,7 +115,40 @@ public class GameOfLife {
 	// Uses the count(board,i,j) function to count the number of alive neighbors.
 	public static int cellValue(int[][] board, int i, int j) {
 		//// Replace the following statement with your code.
-		return 0;
+		int livingNeighbors = count(board, i, j);
+		int value = board[i][j];
+		int cellValue = 0;
+	
+	/* 	if (value == 1){
+			if (livingNeighbors < 2 || livingNeighbors > 3){
+				cellValue = 0;
+			}else{
+				cellValue = 1;
+			}
+		}else if (value == 0){
+			if (livingNeighbors == 3){
+				cellValue = 1;
+			}else{
+				cellValue = 0;
+			}
+		}
+		return cellValue;*/
+		if (board[i][j] == 1){
+			if(livingNeighbors < 2){
+				return 0;
+			}else if (livingNeighbors == 2 || livingNeighbors == 3){
+				return 1;
+			}else if (livingNeighbors > 3)
+			return 0;
+
+		}
+		if (board[i][j] == 0){
+			if(livingNeighbors == 3){
+				return 1;
+			}
+		}
+		return board[i][j];
+
 	}
 	
 	// Counts and returns the number of living neighbors of the given cell
@@ -95,12 +157,32 @@ public class GameOfLife {
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	public static int count(int[][] board, int i, int j) {
 		//// Replace the following statement with your code.
-		return 0;
+		int livingNeighbors = 0;
+
+		for (int row = i-1; row <= i+1; row++){
+			for (int col = j-1; col <= j+1; col++){
+				if (row != i || col != j){
+				if (board[row][col] == 1){
+					livingNeighbors++;
+					}
+				}
+			}
+
+		}
+		return livingNeighbors;
 	}
 	
 	// Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
     public static void print(int[][] arr) {
 		//// Write your code here.
+		for (int i = 1; i < arr.length-1; i++){
+			for ( int j = 1; j < arr[0].length-1; j++){
+				System.out.printf("%3s", arr[i][j]);
+
+			}
+			System.out.println();
+
+		}
 	}
 		
     // Displays the board. Living and dead cells are represented by black and white squares, respectively.
