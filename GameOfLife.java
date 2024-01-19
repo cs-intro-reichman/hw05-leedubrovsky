@@ -14,7 +14,7 @@ public class GameOfLife {
 		 test1(fileName);
 		 test2(fileName);
 		 test3(fileName, 3);
-		 //play(fileName);
+		 play(fileName);
 	}
 	
 	// Reads the data file and prints the initial board.
@@ -71,12 +71,12 @@ public class GameOfLife {
 
 		String rowString = in.readLine(); //enter the firt empty row
 		for (int i = 2; i < board.length-2; i++ ){
-			rowString = in.readLine(); // enter the second row maybe its empty maybe its not 
+			 rowString = in.readLine(); // enter the second row maybe its empty maybe its not 
 			
 			if (!rowString.isEmpty()) {
 
-			for (int j = 2; j < board[0].length-2; j++){
-				if (rowString.charAt(j-1) == 'x'  ){
+			for (int j = 2; j < board[1].length-2; j++){
+				if (rowString.charAt(j-1) == 'x'){
 					board[i][j] = 1;
 				}else  {
 					board[i][j] = 0;
@@ -95,8 +95,8 @@ public class GameOfLife {
 	public static int[][] evolve(int[][] board) {
 		//// Replace the following statement with your code.
 		int[][] finalBoard = new int[board.length][board[0].length] ;
-		for (int i = 1; i < finalBoard.length-1; i++){
-			for (int j = 1; j < finalBoard[i].length-1; j++){
+		for (int i = 1; i < board.length-1; i++){
+			for (int j = 1; j < board[i].length-1; j++){
 				finalBoard[i][j] = cellValue(board, i, j);
 			}
 		}
@@ -116,10 +116,10 @@ public class GameOfLife {
 	public static int cellValue(int[][] board, int i, int j) {
 		//// Replace the following statement with your code.
 		int livingNeighbors = count(board, i, j);
-		int value = board[i][j];
+		/*int value = board[i][j];
 		int cellValue = 0;
 	
-	/* 	if (value == 1){
+	 	if (value == 1){
 			if (livingNeighbors < 2 || livingNeighbors > 3){
 				cellValue = 0;
 			}else{
@@ -161,14 +161,15 @@ public class GameOfLife {
 
 		for (int row = i-1; row <= i+1; row++){
 			for (int col = j-1; col <= j+1; col++){
-				if (row != i || col != j){
+			//	if (row != i || col != j){
 				if (board[row][col] == 1){
 					livingNeighbors++;
 					}
-				}
+				//}
 			}
 
 		}
+		livingNeighbors -= board[i][j];
 		return livingNeighbors;
 	}
 	
@@ -176,7 +177,7 @@ public class GameOfLife {
     public static void print(int[][] arr) {
 		//// Write your code here.
 		for (int i = 1; i < arr.length-1; i++){
-			for ( int j = 1; j < arr[0].length-1; j++){
+			for ( int j = 1; j < arr[1].length-1; j++){
 				System.out.printf("%3s", arr[i][j]);
 
 			}
