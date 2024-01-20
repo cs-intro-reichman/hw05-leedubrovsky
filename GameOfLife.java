@@ -122,23 +122,7 @@ public class GameOfLife {
 	public static int cellValue(int[][] board, int i, int j) {
 		//// Replace the following statement with your code.
 		int livingNeighbors = count(board, i, j);
-		/*int value = board[i][j];
-		int cellValue = 0;
-	
-	 	if (value == 1){
-			if (livingNeighbors < 2 || livingNeighbors > 3){
-				cellValue = 0;
-			}else{
-				cellValue = 1;
-			}
-		}else if (value == 0){
-			if (livingNeighbors == 3){
-				cellValue = 1;
-			}else{
-				cellValue = 0;
-			}
-		}
-		return cellValue;*/
+		
 		if (board[i][j] == 1){
 			if(livingNeighbors < 2){
 				return 0;
